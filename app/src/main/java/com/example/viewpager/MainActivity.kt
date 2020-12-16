@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun initAdapter() {
-        val adapter = ViewPagerAdapter(images)
+        val adapter = ViewPagerAdapter(supportFragmentManager)
         viewPager.adapter = adapter
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->

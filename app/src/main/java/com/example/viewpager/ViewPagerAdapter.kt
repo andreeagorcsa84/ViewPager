@@ -1,28 +1,37 @@
 package com.example.viewpager
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_view_pager.view.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import com.example.viewpager.fragment.Fragment1
+import com.example.viewpager.fragment.Fragment2
+import com.example.viewpager.fragment.Fragment3
 
-class ViewPagerAdapter(private val images: List<Int>) :
-    RecyclerView.Adapter<ViewPagerAdapter.ViewPagerViewHolder>() {
+class ViewPagerAdapter(fragmentManager: FragmentManager) :  FragmentPagerAdapter(fragmentManager) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_view_pager, parent, false)
-        return ViewPagerViewHolder(itemView)
+    val PAGE_MAX_COUNT = 3
+
+    override fun getCount(): Int {
+        return PAGE_MAX_COUNT
     }
 
-    override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
-        val currentImage = images[position]
-        holder.itemView.item_view_image.setImageResource(currentImage)
-    }
+    override fun getItem(position: Int): Fragment {
+       val fragment : Fragment = when(position) {
+           1 -> Fragment2.newInstance()
+           2 -> Fragment3.newInstance()
+           else -> Fragment1.newInstance()
+       }
+        return fragment
+       }
 
-    override fun getItemCount(): Int {
-       return images.size
-    }
+    override fun getPageTitle(position: Int): CharSequence? {
 
-    inner class  ViewPagerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val title: String = when(position) {
+            1 -> "one"
+            2 -> "two"
+            3 -> "three"
+            else -> "main"
+        }
+        return title
     }
 }
